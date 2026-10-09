@@ -1,0 +1,8 @@
+### GET request to example server
+POST http://localhost:8080/api/urls
+Content-Type: application/json
+
+{
+  "originalUrl": "http://example.com/products"
+}
+###
