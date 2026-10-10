@@ -5,4 +5,23 @@ Content-Type: application/json
 {
   "originalUrl": "http://example.com/products"
 }
+
 ###
+
+POST http://localhost:8080/api/urls
+Content-Type: application/json
+
+{
+  "originalUrl": "https://www.wikipedia.org/"
+}
+
+###
+# @no-redirect
+GET http://localhost:8080/bdTnKE
+
+###
+# @no-redirect
+GET http://localhost:8080/y854C7
+
+###
+GET http://localhost:8080/notARealCode
