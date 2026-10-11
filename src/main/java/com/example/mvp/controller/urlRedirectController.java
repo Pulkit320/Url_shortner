@@ -1,7 +1,6 @@
 package com.example.mvp.controller;
 
 import com.example.mvp.entity.urlMapping;
-import com.example.mvp.repository.urlMappingRepository;
 import com.example.mvp.service.urlMappingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
