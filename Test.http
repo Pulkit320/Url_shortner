@@ -21,7 +21,24 @@ GET http://localhost:8080/bdTnKE
 
 ###
 # @no-redirect
-GET http://localhost:8080/y854C7
+GET http://localhost:8080/u7cAEt
 
 ###
 GET http://localhost:8080/notARealCode
+
+###
+
+POST http://localhost:8080/api/urls
+Content-Type: application/json
+
+{
+  "originalUrl":" "
+}
+
+###
+POST http://localhost:8080/api/urls
+Content-Type: application/json
+
+{
+  "originalUrl": "ftp://example.com/products"
+}

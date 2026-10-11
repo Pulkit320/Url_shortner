@@ -11,12 +11,10 @@
 ## Project Structure
 ```text
 
-java
-└── com
-    └── example
         └── mvp
             ├── controller
-            │   └── urlMappingController.java
+            │   ├── urlMappingController.java
+            │   └── urlRedirectController.java
             ├── entity
             │   └── urlMapping.java
             ├── MvpApplication.java
@@ -24,6 +22,7 @@ java
             │   └── urlMappingRepository.java
             └── service
                 └── urlMappingService.java
+
 
 ```
 
@@ -35,6 +34,9 @@ java
 * Implemented **urlMappingService**
 * Implemented **urlController**
 * Added _POST /api/urls_
+* Added a **urlRedirectController**
+* Implemeted a _getByShortCode_ in **urlMappingService** 
+* Added _GET /{shortCode}_
 
 ## Architecture
-Controller --> Service -->Repository --> PostgreSQL
+Controller --> Service --> Repository --> PostgreSQL
