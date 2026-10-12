@@ -4,9 +4,11 @@ import com.example.mvp.entity.urlMapping;
 import com.example.mvp.repository.urlMappingRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -87,5 +89,26 @@ class urlMappingServiceTest {
                 ()->urlMappingService.getByShortCode("missing"));
         assertEquals(404,exception.getStatusCode().value());
         verify(urlMappingRepository).findByShortCode("missing");
+    }
+
+    @Test
+    void shortenUrlShouldRetryWhenSaveFailsDueToCollision() {
+        when(urlMappingRepository.existsByShortCode(anyString())).thenReturn(false, true, false);
+        when(urlMappingRepository.save(any(urlMapping.class)))
+                .thenThrow(new DataIntegrityViolationException("Duplicate short code"))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+        urlMapping result = urlMappingService.shortenUrl("https://wikipedia.org/");
+
+        assertNotNull(result);
+        assertEquals("https://wikipedia.org/",result.getOriginalUrl());
+        assertNotNull(result.getShortCode());
+
+        ArgumentCaptor<urlMapping> captor = ArgumentCaptor.forClass(urlMapping.class);
+        verify(urlMappingRepository,times(2)).save(captor.capture());
+
+        assertNotEquals(
+                captor.getAllValues().get(0).getShortCode(),
+                captor.getAllValues().get(1).getShortCode()
+        );
     }
 }
