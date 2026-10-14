@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: url-shortener-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: urlshortner
+      POSTGRES_USER: pulkit
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.docker}
+    ports:
+      - "5333:5432"
+    volumes:
+      - url_shortener_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pulkit -d urlshortner"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  url_shortener_data:
